@@ -64,27 +64,36 @@ public class ClientForm extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
         TitleLabel.setFont(new java.awt.Font("URW Chancery L", 1, 24)); // NOI18N
+        TitleLabel.setForeground(new java.awt.Color(0, 0, 0));
         TitleLabel.setText("CLIENTS");
 
         inputPanel.setBackground(new java.awt.Color(255, 255, 204));
-        inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Inputs"));
+        inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inputs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        inputPanel.setForeground(new java.awt.Color(0, 0, 0));
 
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Registration Number");
 
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("First Name");
 
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Last Name");
 
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Phone Number");
 
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Email");
 
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Client Category");
 
         BrowseImageButton.setBackground(new java.awt.Color(0, 0, 0));
         BrowseImageButton.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         BrowseImageButton.setForeground(new java.awt.Color(255, 255, 255));
         BrowseImageButton.setText("Browse Image");
+        BrowseImageButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         registrationNumberTextField.setBackground(new java.awt.Color(102, 51, 0));
         registrationNumberTextField.setForeground(new java.awt.Color(255, 255, 255));
@@ -183,28 +192,33 @@ public class ClientForm extends javax.swing.JInternalFrame {
         );
 
         commandPanel.setBackground(new java.awt.Color(255, 255, 204));
-        commandPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Commands"));
+        commandPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inputs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        commandPanel.setForeground(new java.awt.Color(0, 0, 0));
 
         saveButton.setBackground(new java.awt.Color(0, 102, 51));
         saveButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         saveButton.setForeground(new java.awt.Color(255, 255, 255));
         saveButton.setText("SAVE");
+        saveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         updateButton.setBackground(new java.awt.Color(204, 153, 0));
         updateButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         updateButton.setForeground(new java.awt.Color(255, 255, 255));
         updateButton.setText("UPDATE");
+        updateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         resetButton.setBackground(new java.awt.Color(255, 204, 102));
         resetButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         resetButton.setForeground(new java.awt.Color(255, 255, 255));
         resetButton.setText("RESET");
+        resetButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         deleteButton.setBackground(new java.awt.Color(153, 0, 0));
         deleteButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         deleteButton.setForeground(new java.awt.Color(255, 255, 255));
         deleteButton.setText("DELETE");
         deleteButton.setToolTipText("");
+        deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout commandPanelLayout = new javax.swing.GroupLayout(commandPanel);
         commandPanel.setLayout(commandPanelLayout);
@@ -234,7 +248,8 @@ public class ClientForm extends javax.swing.JInternalFrame {
         );
 
         presentationPanel.setBackground(new java.awt.Color(255, 255, 204));
-        presentationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Presentation"));
+        presentationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inputs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        presentationPanel.setForeground(new java.awt.Color(0, 0, 0));
 
         clientTable.setBackground(new java.awt.Color(102, 0, 0));
         clientTable.setModel(new javax.swing.table.DefaultTableModel(

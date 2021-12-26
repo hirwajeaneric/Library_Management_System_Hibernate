@@ -87,7 +87,8 @@ public class BookForm extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
 
         inputPanel.setBackground(new java.awt.Color(255, 255, 204));
-        inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Inputs"));
+        inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Commands", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        inputPanel.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Book Id");
@@ -126,7 +127,7 @@ public class BookForm extends javax.swing.JInternalFrame {
         availableComboBox.setForeground(new java.awt.Color(255, 255, 255));
         availableComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
 
-        publicationDateChooser.setBackground(new java.awt.Color(153, 51, 0));
+        publicationDateChooser.setBackground(new java.awt.Color(255, 255, 204));
 
         pagesTextField.setBackground(new java.awt.Color(102, 51, 0));
         pagesTextField.setForeground(new java.awt.Color(255, 255, 255));
@@ -212,28 +213,33 @@ public class BookForm extends javax.swing.JInternalFrame {
         );
 
         commandPanel.setBackground(new java.awt.Color(255, 255, 204));
-        commandPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Commands"));
+        commandPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Commands", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        commandPanel.setForeground(new java.awt.Color(0, 0, 0));
 
         saveButtonBook.setBackground(new java.awt.Color(0, 102, 51));
         saveButtonBook.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         saveButtonBook.setForeground(new java.awt.Color(255, 255, 255));
         saveButtonBook.setText("SAVE");
+        saveButtonBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         updateButtonBook.setBackground(new java.awt.Color(204, 153, 0));
         updateButtonBook.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         updateButtonBook.setForeground(new java.awt.Color(255, 255, 255));
         updateButtonBook.setText("UPDATE");
+        updateButtonBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         resetButtonBook.setBackground(new java.awt.Color(255, 204, 102));
         resetButtonBook.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         resetButtonBook.setForeground(new java.awt.Color(255, 255, 255));
         resetButtonBook.setText("RESET");
+        resetButtonBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         deleteButtonBook.setBackground(new java.awt.Color(153, 0, 0));
         deleteButtonBook.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         deleteButtonBook.setForeground(new java.awt.Color(255, 255, 255));
         deleteButtonBook.setText("DELETE");
         deleteButtonBook.setToolTipText("");
+        deleteButtonBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout commandPanelLayout = new javax.swing.GroupLayout(commandPanel);
         commandPanel.setLayout(commandPanelLayout);
@@ -267,7 +273,8 @@ public class BookForm extends javax.swing.JInternalFrame {
         );
 
         presentationPanel.setBackground(new java.awt.Color(255, 255, 204));
-        presentationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Presentation"));
+        presentationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Commands", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
+        presentationPanel.setForeground(new java.awt.Color(0, 0, 0));
 
         BookTable.setBackground(new java.awt.Color(102, 0, 0));
         BookTable.setModel(new javax.swing.table.DefaultTableModel(
