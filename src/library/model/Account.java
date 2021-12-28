@@ -1,13 +1,20 @@
 package library.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author hirwa
  */
+@Entity
+@Table(name="account")
 public class Account {
     private String firstName;
     private String lastName;
     private String email;
+    @Id
     private String userName;
     private String password1;
     private String password2;

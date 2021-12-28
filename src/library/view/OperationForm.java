@@ -62,7 +62,7 @@ public class OperationForm extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
-        TitleLabel.setFont(new java.awt.Font("URW Chancery L", 1, 24)); // NOI18N
+        TitleLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         TitleLabel.setForeground(new java.awt.Color(0, 0, 0));
         TitleLabel.setText("CLIENTS");
 
@@ -312,7 +312,7 @@ public class OperationForm extends javax.swing.JInternalFrame {
                         .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(commandPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 2, Short.MAX_VALUE))
+                        .addGap(0, 4, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

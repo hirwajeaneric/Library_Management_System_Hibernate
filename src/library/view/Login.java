@@ -1,15 +1,29 @@
 package library.view;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import library.controller.GenericDao;
+import library.model.Account;
+
 /**
  *
  * @author hirwa
  */
 public class Login extends javax.swing.JFrame {
 
+    Account account = new Account();
+    GenericDao<Account> genericAccount = new GenericDao(Account.class);
+    List<Account> userAccountList;
+    
     public Login() {
         initComponents();
+        retrieveUserCredentials();
     }
 
+    public void retrieveUserCredentials(){
+        userAccountList = genericAccount.retrieveAll(account);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -170,15 +184,15 @@ public class Login extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String enteredUsername = userNameTextField.getText();
-        String enteredPassword = passwordField.getText();
+        String enteredPassword = passwordField.getPassword().toString();
         
-        if (rootPaneCheckingEnabled) {
-            
-            
-            Main mainForm = new Main();
-            mainForm.setVisible(true);
-        } else {
-            
+        for (Account anAccount : userAccountList) {
+            if (anAccount.getUserName().equals(enteredUsername) || anAccount.getPassword1().equals(enteredPassword)) {
+                Main mainForm = new Main();
+                mainForm.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Wrong Username or Password!","Denied",JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
