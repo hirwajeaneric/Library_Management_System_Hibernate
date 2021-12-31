@@ -16,13 +16,13 @@ public class Client {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private String clientCategory;
+    private ClientType clientCategory;
     private File image;
 
     public Client() {
     }
 
-    public Client(String registrationNumber, String firstName, String lastName, String phoneNumber, String email, String clientCategory, File image) {
+    public Client(String registrationNumber, String firstName, String lastName, String phoneNumber, String email, ClientType clientCategory, File image) {
         this.registrationNumber = registrationNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,11 +72,11 @@ public class Client {
         this.email = email;
     }
 
-    public String getClientCategory() {
+    public ClientType getClientCategory() {
         return clientCategory;
     }
 
-    public void setClientCategory(String clientCategory) {
+    public void setClientCategory(ClientType clientCategory) {
         this.clientCategory = clientCategory;
     }
 
@@ -87,7 +87,6 @@ public class Client {
     public void setImage(File image) {
         this.image = image;
     }
-    
-    
+        
     
 }

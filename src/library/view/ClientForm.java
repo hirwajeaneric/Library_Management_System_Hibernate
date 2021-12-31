@@ -1,6 +1,11 @@
 package library.view;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import library.controller.GenericDao;
@@ -9,6 +14,15 @@ import library.model.ClientType;
 
 public class ClientForm extends javax.swing.JInternalFrame {
 
+    //THIS SECTION CONTAINS GLOBAL VARIABLES. 
+    //Variables to be used when dealing with selection of the image.
+    int selectedRow;
+    byte[] person_image;
+    FileInputStream fileinputstream;
+    String thePathOfTheImage;
+    File theimage, selectedImage;    
+    byte[] ImagePhotoFileFromDatabase;
+    
     //Additional but necessary variables and instances
     
     List<Client> clientList;
@@ -34,7 +48,13 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }
 
     private void resetFields(){
-        
+        registrationNumberTextField.setText(null);
+        firstNameTextField.setText(null);
+        lastNameTextField.setText(null);
+        phoneNumberTextField.setText(null);
+        emailTextField.setText(null);
+        clientComboBox.setSelectedIndex(0);
+        imageLabel.setIcon(null);
     }
     
     @SuppressWarnings("unchecked")
@@ -59,6 +79,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
         clientComboBox = new javax.swing.JComboBox<>();
         imagePanel = new javax.swing.JPanel();
         imageLabel = new javax.swing.JLabel();
+        imagePathTextField = new javax.swing.JTextField();
         commandPanel = new javax.swing.JPanel();
         saveButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
@@ -147,20 +168,23 @@ public class ClientForm extends javax.swing.JInternalFrame {
             .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        imagePathTextField.setBackground(new java.awt.Color(102, 51, 0));
+
         javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
         inputPanel.setLayout(inputPanelLayout);
         inputPanelLayout.setHorizontalGroup(
             inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(BrowseImageButton)
-                    .addComponent(jLabel7))
+                    .addComponent(BrowseImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addComponent(imagePathTextField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(registrationNumberTextField)
@@ -206,7 +230,9 @@ public class ClientForm extends javax.swing.JInternalFrame {
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inputPanelLayout.createSequentialGroup()
                         .addComponent(BrowseImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(112, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(imagePathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -270,7 +296,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
                 .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
@@ -316,7 +342,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
             presentationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(presentationPanelLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -368,14 +394,19 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        String regNo = registrationNumberTextField.getText();
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String phoneNumber = phoneNumberTextField.getText();
-        String email = emailTextField.getText();
-        String clientCategory = clientComboBox.getSelectedItem().toString();
+        client = new Client();
         
-        client = new Client(phoneNumber, firstName, lastName, phoneNumber, email, clientCategory, image);
+        client.setRegistrationNumber( registrationNumberTextField.getText());
+        client.setFirstName(firstNameTextField.getText());
+        client.setLastName(lastNameTextField.getText());
+        client.setPhoneNumber(phoneNumberTextField.getText());
+        client.setEmail(emailTextField.getText());
+        if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("student")) {
+            client.setClientCategory(ClientType.Student);
+        } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("staff")){
+            client.setClientCategory(ClientType.Staff);
+        }
+        client.setImage(theimage);
         
         clientDao.save(client);
         retrieveClientList();
@@ -385,24 +416,51 @@ public class ClientForm extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Saved a Client", "Success", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    //What happens when we click on browse image.
     private void BrowseImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseImageButtonActionPerformed
+        JFileChooser imageChooser = new JFileChooser();
+        imageChooser.showOpenDialog(null);
+        selectedImage = imageChooser.getSelectedFile();
+        thePathOfTheImage = selectedImage.getAbsolutePath();
+        imagePathTextField.setText(thePathOfTheImage);
+        theimage = new File(thePathOfTheImage);
         
+        displaySelectedImage(thePathOfTheImage);
     }//GEN-LAST:event_BrowseImageButtonActionPerformed
-
+    
+    //Method to display the chosen Image
+    public void displaySelectedImage(String thePathOfTheImage1){
+        ImageIcon image = new ImageIcon(thePathOfTheImage1);
+        Image im = image.getImage();
+        Image myImg = im.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImage = new ImageIcon(myImg);
+        imageLabel.setIcon(newImage);
+    }
+    
+    //Method to display images.
+    public void displayImage(byte[] ImagePhotoFileFromDatabase1){
+        ImageIcon image = new ImageIcon(ImagePhotoFileFromDatabase);
+        Image im = image.getImage();
+        Image myImg = im.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon newImage = new ImageIcon(myImg);
+        imageLabel.setIcon(newImage);
+    }
+    
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        String regNo = registrationNumberTextField.getText();
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String phoneNumber = phoneNumberTextField.getText();
-        String email = emailTextField.getText();
+        client = new Client();
+        
+        client.setRegistrationNumber( registrationNumberTextField.getText());
+        client.setFirstName(firstNameTextField.getText());
+        client.setLastName(lastNameTextField.getText());
+        client.setPhoneNumber(phoneNumberTextField.getText());
+        client.setEmail(emailTextField.getText());
         if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("student")) {
-            client.setClientCategory(ClientType.student);
+            client.setClientCategory(ClientType.Student);
         } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("staff")){
-            clientComboBox.getSelectedItem().toString();
+            client.setClientCategory(ClientType.Staff);
         }
-        
-        client = new Client(phoneNumber, firstName, lastName, phoneNumber, email, clientCategory, image);
-        
+        client.setImage(theimage);
+                
         clientDao.update(client);
         retrieveClientList();
         displayClientsInTable();
@@ -412,14 +470,19 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        String regNo = registrationNumberTextField.getText();
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String phoneNumber = phoneNumberTextField.getText();
-        String email = emailTextField.getText();
-        String clientCategory = clientComboBox.getSelectedItem().toString();
+        client = new Client();
         
-        client = new Client(phoneNumber, firstName, lastName, phoneNumber, email, clientCategory, image);
+        client.setRegistrationNumber( registrationNumberTextField.getText());
+        client.setFirstName(firstNameTextField.getText());
+        client.setLastName(lastNameTextField.getText());
+        client.setPhoneNumber(phoneNumberTextField.getText());
+        client.setEmail(emailTextField.getText());
+        if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("student")) {
+            client.setClientCategory(ClientType.Student);
+        } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("staff")){
+            client.setClientCategory(ClientType.Staff);
+        }
+        client.setImage(theimage);
         
         clientDao.delete(client);
         retrieveClientList();
@@ -443,7 +506,10 @@ public class ClientForm extends javax.swing.JInternalFrame {
         phoneNumberTextField.setText(model.getValueAt(selectedRow, 3).toString());
         emailTextField.setText(model.getValueAt(selectedRow, 4).toString());
         clientComboBox.setSelectedItem(model.getValueAt(selectedRow, 5).toString());
-        //firstNameTextField.setText(model.getValueAt(selectedRow, 6).toString());
+        imagePathTextField.setText(model.getValueAt(selectedRow, 6).toString());
+        ImagePhotoFileFromDatabase = (byte[]) model.getValueAt(selectedRow, 5);
+        
+        displayImage(ImagePhotoFileFromDatabase);
         
     }//GEN-LAST:event_clientTableMouseClicked
 
@@ -459,6 +525,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel imageLabel;
     private javax.swing.JPanel imagePanel;
+    private javax.swing.JTextField imagePathTextField;
     private javax.swing.JPanel inputPanel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
