@@ -2,6 +2,7 @@ package library.view;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,13 +39,10 @@ public class BookForm extends javax.swing.JInternalFrame {
     
     public BookForm() {
         initComponents();
-        
         retrieveBookList();
         retrieveBookCategoryList();
-        
         displayBooksInTable();
         displayBookCategoriesInTable();
-        
         updateBookCategoryComboBox();
     }
 
@@ -106,9 +104,7 @@ public class BookForm extends javax.swing.JInternalFrame {
     
     public void updateBookCategoryComboBox(){
         bookCategoryComboBox.removeAllItems();
-        for (BookCategory categories : bookCategoryList) {
-            System.out.println(categories.getCategoryName());
-        }
+
         bookCategoryList.forEach((BookCategory bct)->{
             bookCategoryComboBox.addItem(bct.getCategoryName());
         });
@@ -387,12 +383,14 @@ public class BookForm extends javax.swing.JInternalFrame {
         presentationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Commands", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         presentationPanel.setForeground(new java.awt.Color(0, 0, 0));
 
+        BookTable.setBackground(new java.awt.Color(0, 0, 0));
+        BookTable.setForeground(new java.awt.Color(255, 255, 255));
         BookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Book Id", "Title", "Author", "Publishing House", "Publication Date", "Pages", "Available"
+                "Book Id", "Title", "Author", "Book Category", "Publishing House", "Publication Date", "Pages", "Available"
             }
         ));
         BookTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -566,7 +564,8 @@ public class BookForm extends javax.swing.JInternalFrame {
         presentationPanel1.setBackground(new java.awt.Color(255, 255, 204));
         presentationPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Presentation"));
 
-        BookCategoryTable.setBackground(new java.awt.Color(255, 255, 255));
+        BookCategoryTable.setBackground(new java.awt.Color(0, 0, 0));
+        BookCategoryTable.setForeground(new java.awt.Color(255, 255, 255));
         BookCategoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

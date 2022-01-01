@@ -1,9 +1,14 @@
 package library.view;
 
 import java.awt.Image;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -40,11 +45,24 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }
     
     public void retrieveClientList(){
-    
+        clientList = clientDao.retrieveAll(client);
     }
     
-    private void displayClientsInTable(){
+    private void displayClientsInTable(){   
+        model = (DefaultTableModel) clientTable.getModel();
+        model.setRowCount(0);
         
+        for (Client aClient : clientList) {
+            model.addRow(new Object[]{
+                aClient.getRegistrationNumber(),
+                aClient.getFirstName(),
+                aClient.getLastName(),
+                aClient.getPhoneNumber(),
+                aClient.getEmail(),
+                aClient.getClientCategory(),
+                aClient.getImage()
+            });
+        }
     }
 
     private void resetFields(){
@@ -55,6 +73,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
         emailTextField.setText(null);
         clientComboBox.setSelectedIndex(0);
         imageLabel.setIcon(null);
+        imagePathTextField.setText(null);
     }
     
     @SuppressWarnings("unchecked")
@@ -97,32 +116,41 @@ public class ClientForm extends javax.swing.JInternalFrame {
         setTitle("Clients");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TitleLabel.setFont(new java.awt.Font("URW Chancery L", 1, 24)); // NOI18N
         TitleLabel.setForeground(new java.awt.Color(0, 0, 0));
         TitleLabel.setText("CLIENTS");
+        jPanel1.add(TitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 18, -1, -1));
 
         inputPanel.setBackground(new java.awt.Color(255, 255, 204));
         inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inputs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         inputPanel.setForeground(new java.awt.Color(0, 0, 0));
+        inputPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Registration Number");
+        inputPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 30, -1, -1));
 
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("First Name");
+        inputPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 64, -1, -1));
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Last Name");
+        inputPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 96, -1, -1));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Phone Number");
+        inputPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 128, -1, -1));
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Email");
+        inputPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 156, -1, -1));
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Client Category");
+        inputPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 188, -1, -1));
 
         BrowseImageButton.setBackground(new java.awt.Color(0, 0, 0));
         BrowseImageButton.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -134,107 +162,45 @@ public class ClientForm extends javax.swing.JInternalFrame {
                 BrowseImageButtonActionPerformed(evt);
             }
         });
+        inputPanel.add(BrowseImageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 219, -1, 34));
 
         registrationNumberTextField.setBackground(new java.awt.Color(102, 51, 0));
         registrationNumberTextField.setForeground(new java.awt.Color(255, 255, 255));
+        inputPanel.add(registrationNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 28, 153, -1));
 
         firstNameTextField.setBackground(new java.awt.Color(102, 51, 0));
         firstNameTextField.setForeground(new java.awt.Color(255, 255, 255));
+        inputPanel.add(firstNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 60, 153, -1));
 
         lastNameTextField.setBackground(new java.awt.Color(102, 51, 0));
         lastNameTextField.setForeground(new java.awt.Color(255, 255, 255));
+        inputPanel.add(lastNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 92, 153, -1));
 
         phoneNumberTextField.setBackground(new java.awt.Color(102, 51, 0));
         phoneNumberTextField.setForeground(new java.awt.Color(255, 255, 255));
+        inputPanel.add(phoneNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 124, 153, -1));
 
         emailTextField.setBackground(new java.awt.Color(102, 51, 0));
         emailTextField.setForeground(new java.awt.Color(255, 255, 255));
+        inputPanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 154, 153, -1));
 
         clientComboBox.setBackground(new java.awt.Color(102, 51, 0));
         clientComboBox.setForeground(new java.awt.Color(255, 255, 255));
         clientComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Staff" }));
+        inputPanel.add(clientComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 184, 153, -1));
 
         imagePanel.setBackground(new java.awt.Color(51, 51, 51));
         imagePanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        imagePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        imagePanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 147, 140));
 
-        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
-        imagePanel.setLayout(imagePanelLayout);
-        imagePanelLayout.setHorizontalGroup(
-            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(imageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        imagePanelLayout.setVerticalGroup(
-            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        inputPanel.add(imagePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 219, 153, 146));
 
         imagePathTextField.setBackground(new java.awt.Color(102, 51, 0));
+        imagePathTextField.setForeground(new java.awt.Color(255, 255, 255));
+        inputPanel.add(imagePathTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 264, 125, -1));
 
-        javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
-        inputPanel.setLayout(inputPanelLayout);
-        inputPanelLayout.setHorizontalGroup(
-            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inputPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(BrowseImageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7)
-                    .addComponent(imagePathTextField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(registrationNumberTextField)
-                    .addComponent(firstNameTextField)
-                    .addComponent(lastNameTextField)
-                    .addComponent(phoneNumberTextField)
-                    .addComponent(emailTextField)
-                    .addComponent(clientComboBox, 0, 153, Short.MAX_VALUE)
-                    .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        inputPanelLayout.setVerticalGroup(
-            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(inputPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(inputPanelLayout.createSequentialGroup()
-                        .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(inputPanelLayout.createSequentialGroup()
-                                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(inputPanelLayout.createSequentialGroup()
-                                        .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel2)
-                                            .addComponent(registrationNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel3))
-                                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4))
-                            .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5))
-                    .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(clientComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(inputPanelLayout.createSequentialGroup()
-                        .addComponent(BrowseImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(imagePathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+        jPanel1.add(inputPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 55, 330, 380));
 
         commandPanel.setBackground(new java.awt.Color(255, 255, 204));
         commandPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inputs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -312,11 +278,14 @@ public class ClientForm extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jPanel1.add(commandPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 61, -1, -1));
+
         presentationPanel.setBackground(new java.awt.Color(255, 255, 204));
         presentationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inputs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 11), new java.awt.Color(0, 0, 0))); // NOI18N
         presentationPanel.setForeground(new java.awt.Color(0, 0, 0));
 
-        clientTable.setBackground(new java.awt.Color(102, 0, 0));
+        clientTable.setBackground(new java.awt.Color(0, 0, 0));
+        clientTable.setForeground(new java.awt.Color(255, 255, 255));
         clientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -345,39 +314,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(commandPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(presentationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(TitleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(TitleLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(commandPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(presentationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        jPanel1.add(presentationPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 152, 574, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -401,12 +338,12 @@ public class ClientForm extends javax.swing.JInternalFrame {
         client.setLastName(lastNameTextField.getText());
         client.setPhoneNumber(phoneNumberTextField.getText());
         client.setEmail(emailTextField.getText());
-        if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("student")) {
+        if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("Student")) {
             client.setClientCategory(ClientType.Student);
-        } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("staff")){
+        } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("Staff")){
             client.setClientCategory(ClientType.Staff);
         }
-        client.setImage(theimage);
+        client.setImage(person_image);
         
         clientDao.save(client);
         retrieveClientList();
@@ -424,9 +361,29 @@ public class ClientForm extends javax.swing.JInternalFrame {
         thePathOfTheImage = selectedImage.getAbsolutePath();
         imagePathTextField.setText(thePathOfTheImage);
         theimage = new File(thePathOfTheImage);
-        
+       
+        convertImageFileIntoByteArray(theimage);
         displaySelectedImage(thePathOfTheImage);
     }//GEN-LAST:event_BrowseImageButtonActionPerformed
+    
+    //Converting the image into BYTE ARRAYS that can be easily saved and retrieved to and from the database.
+    public byte[] convertImageFileIntoByteArray(File image) {
+        try {
+            fileinputstream = new FileInputStream(theimage);
+            
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            
+            byte[] buf = new byte[2048];
+            for(int readNum; (readNum = fileinputstream.read(buf))!=-1;){
+                byteArrayOutputStream.write(buf,0,readNum);
+            }
+            person_image = byteArrayOutputStream.toByteArray();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return person_image;
+    }
     
     //Method to display the chosen Image
     public void displaySelectedImage(String thePathOfTheImage1){
@@ -459,7 +416,8 @@ public class ClientForm extends javax.swing.JInternalFrame {
         } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("staff")){
             client.setClientCategory(ClientType.Staff);
         }
-        client.setImage(theimage);
+        person_image=imagePathTextField.getText().getBytes();
+        client.setImage(person_image);
                 
         clientDao.update(client);
         retrieveClientList();
@@ -482,7 +440,8 @@ public class ClientForm extends javax.swing.JInternalFrame {
         } else if (clientComboBox.getSelectedItem().toString().equalsIgnoreCase("staff")){
             client.setClientCategory(ClientType.Staff);
         }
-        client.setImage(theimage);
+        person_image=imagePathTextField.getText().getBytes();
+        client.setImage(person_image);
         
         clientDao.delete(client);
         retrieveClientList();
@@ -507,7 +466,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
         emailTextField.setText(model.getValueAt(selectedRow, 4).toString());
         clientComboBox.setSelectedItem(model.getValueAt(selectedRow, 5).toString());
         imagePathTextField.setText(model.getValueAt(selectedRow, 6).toString());
-        ImagePhotoFileFromDatabase = (byte[]) model.getValueAt(selectedRow, 5);
+        ImagePhotoFileFromDatabase = (byte[]) model.getValueAt(selectedRow, 6);
         
         displayImage(ImagePhotoFileFromDatabase);
         

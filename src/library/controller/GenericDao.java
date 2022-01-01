@@ -1,7 +1,7 @@
 package library.controller;
 
 import java.util.List;
-import library.model.BookCategory;
+import library.model.Operations;
 import library.utils.HibernateUtil;
 import org.hibernate.*;
 
@@ -50,14 +50,12 @@ public class GenericDao<X> {
         session.close();
         return theListofResults;
     }
-    
-    public List<BookCategory> retrieveCategoryNames(BookCategory bookCats){
-        session = HibernateUtil.getSessionFactory().openSession();
-        transaction = session.beginTransaction();
-        List<BookCategory> theListofCategoryNames= session.createCriteria(bookCats.getCategoryName()).list();
+    public List<Operations> searchData(String searchInput, Operations operations){
+        session=HibernateUtil.getSessionFactory().openSession();
+        transaction=session.beginTransaction();
+        List<Operations> searchResults= session.createCriteria(operations.getClient()).list();
         transaction.commit();
         session.close();
-        return theListofCategoryNames;
+        return searchResults;
     }
-    
 }

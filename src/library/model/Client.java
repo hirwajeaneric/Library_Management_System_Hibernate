@@ -1,8 +1,9 @@
 package library.model;
 
-import java.io.File;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 /**
  *
@@ -17,12 +18,14 @@ public class Client {
     private String phoneNumber;
     private String email;
     private ClientType clientCategory;
-    private File image;
+    @Lob
+    @Column(name = "image" ,columnDefinition = "LONGBLOB")
+    private byte[] image;
 
     public Client() {
     }
 
-    public Client(String registrationNumber, String firstName, String lastName, String phoneNumber, String email, ClientType clientCategory, File image) {
+    public Client(String registrationNumber, String firstName, String lastName, String phoneNumber, String email, ClientType clientCategory, byte[] image) {
         this.registrationNumber = registrationNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,13 +83,13 @@ public class Client {
         this.clientCategory = clientCategory;
     }
 
-    public File getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
-        
+
     
 }

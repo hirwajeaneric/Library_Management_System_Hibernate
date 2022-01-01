@@ -1,21 +1,20 @@
 package library.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  *
  * @author hirwa
  */
 @Entity
-@Table(name="operations")
 public class Operations {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String operationNumber;
+    private int operationNumber;
     private String TransactionType;
     private String client;
     private String book;
@@ -25,11 +24,20 @@ public class Operations {
     public Operations() {
     }
 
-    public String getOperationNumber() {
+    public Operations(int operationNumber, String TransactionType, String client, String book, String transactionDate, String returnDate) {
+        this.operationNumber = operationNumber;
+        this.TransactionType = TransactionType;
+        this.client = client;
+        this.book = book;
+        this.transactionDate = transactionDate;
+        this.returnDate = returnDate;
+    }
+
+    public int getOperationNumber() {
         return operationNumber;
     }
 
-    public void setOperationNumber(String operationNumber) {
+    public void setOperationNumber(int operationNumber) {
         this.operationNumber = operationNumber;
     }
 
@@ -73,6 +81,5 @@ public class Operations {
         this.returnDate = returnDate;
     }
 
-    
     
 }
