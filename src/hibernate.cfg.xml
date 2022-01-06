@@ -45,12 +45,12 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Java_Projects?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.show_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
-    <mapping class="library.model.Book"/>
-    <mapping class="library.model.Client"/>
-    <mapping class="library.model.Operations"/>
-    <mapping class="library.model.Account"/>
-    <mapping class="library.model.BookCategory"/>
+    <property name="hibernate.show_sql">true</property>
+    <mapping class="com.library.model.Account"/>
+    <mapping class="com.library.model.Book"/>
+    <mapping class="com.library.model.BookCategory"/>
+    <mapping class="com.library.model.Client"/>
+    <mapping class="com.library.model.Operations"/>
   </session-factory>
 </hibernate-configuration>

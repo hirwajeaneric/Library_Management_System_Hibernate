@@ -50,5 +50,7 @@ Contributor(s):
     <mapping class="library.model.Book"/>
     <mapping class="library.model.Client"/>
     <mapping class="library.model.Operations"/>
+    <mapping class="library.model.Account"/>
+    <mapping class="library.model.BookCategory"/>
   </session-factory>
 </hibernate-configuration>
